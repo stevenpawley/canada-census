@@ -8,23 +8,20 @@ library(ggplot2)
 library(leaflet)
 library(leafgl)
 
-# View available Census datasets
+# view available Census datasets
 list_census_datasets()
 
 # View available named regions at different levels of Census hierarchy
 edmonton <- list_census_regions("CA1996") |>
   filter(name == "Edmonton", level == "CSD")
 
-# To view available Census variables for the 2016 Census
-list_census_vectors("CA21")
-
 # Return data only
 ca_datasets <- tribble(
   ~ dataset, ~ vectors,
-  "CA21", "v_CA21_1",
-  "CA16", "v_CA16_401",
-  "CA11", "v_CA11F_1",
-  "CA06", "v_CA06_1"
+  "CA21", list_census_vectors("CA21") |> filter(label == "Population, 2021") |> pull(vector),
+  "CA16", list_census_vectors("CA16") |> filter(label == "Population, 2016") |> pull(vector),
+  "CA11", list_census_vectors("CA11") |> filter(label == "Population, 2011") |> pull(vector),
+  "CA06", list_census_vectors("CA06") |> filter(label == "Population, 2006") |> pull(vector)
 )
 
 census_data <- mapply(
@@ -52,19 +49,19 @@ census_data <- census_data |>
   )
 
 ggplot(census_data, aes(fill = Population)) +
-  geom_sf() +
+  geom_sf(linewidth = 0) +
   facet_wrap(vars(year)) +
-  scale_fill_manual(cptcity::cpt("grass_population"))
+  scale_fill_gradientn(colours = cptcity::cpt("grass_population"))
 
 pal <- colorNumeric(
-  palette = "viridis",
-  domain = census_data_21$Population
+  palette = cptcity::cpt("grass_population"),
+  domain = census_data$Population
 )
 
 leaflet() |>
   addProviderTiles(providers$OpenStreetMap) |>
   addGlPolygons(
-    data = census_data_21,
+    data = census_data |> filter(year == 2011),
     fillColor = ~ pal(Population),
     fillOpacity = 0.9,
     weight = 1,

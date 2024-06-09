@@ -8,7 +8,7 @@ library(ggplot2)
 library(leaflet)
 library(leafgl)
 
-# View available Census datasets
+# view available Census datasets
 list_census_datasets()
 
 # View available named regions at different levels of Census hierarchy

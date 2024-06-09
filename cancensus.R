@@ -18,10 +18,18 @@ edmonton <- list_census_regions("CA1996") |>
 # Return data only
 ca_datasets <- tribble(
   ~ dataset, ~ vectors,
-  "CA21", list_census_vectors("CA21") |> filter(label == "Population, 2021") |> pull(vector),
-  "CA16", list_census_vectors("CA16") |> filter(label == "Population, 2016") |> pull(vector),
-  "CA11", list_census_vectors("CA11") |> filter(label == "Population, 2011") |> pull(vector),
-  "CA06", list_census_vectors("CA06") |> filter(label == "Population, 2006") |> pull(vector)
+  "CA21", list_census_vectors("CA21") |>
+    filter(label == "Population, 2021") |>
+    pull(vector),
+  "CA16", list_census_vectors("CA16") |>
+    filter(label == "Population, 2016") |>
+    pull(vector),
+  "CA11", list_census_vectors("CA11") |>
+    filter(label == "Population, 2011") |>
+    pull(vector),
+  "CA06", list_census_vectors("CA06") |>
+    filter(label == "Population, 2006") |>
+    pull(vector)
 )
 
 census_data <- mapply(
@@ -68,4 +76,3 @@ leaflet() |>
     color = "white",
     popup = ~ paste("Population: ", Population, "<br>")
   )
-

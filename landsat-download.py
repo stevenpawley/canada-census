@@ -41,7 +41,7 @@ search = catalog.search(filter_lang="cql2-json", filter={
     {"op": "s_intersects", "args": [{"property": "geometry"}, aoi]},
     {"op": "=", "args": [{"property": "collection"}, "landsat-c2-l2"]},
     {"op": "<=", "args": [{"property": "eo:cloud_cover"}, 10]},
-    {"op": ">=", "args": [{"property": "datetime"}, "2021-06-01T00:00:00Z"]},
+    {"op": ">=", "args": [{"property": "datetime"}, "2021-07-01T00:00:00Z"]},
     {"op": "<=", "args": [{"property": "datetime"}, "2021-08-31T23:59:59Z"]},
   ]
 })
@@ -60,7 +60,7 @@ ds.squeeze().plot.imshow()
 
 # %% Load all items into a single xarray dataset
 asset_list = ["red", "green", "blue", "nir", "swir16", "swir22", "qa_pixel"]
-stack = stackstac.stack(items, assets=asset_list, epsg=32611)
+stack = stackstac.stack(items, assets=asset_list, epsg=32611, chunksize=512)
 
 # %% Mask out clouds using cloud asset
 mask_bitfields = [1, 2, 3, 4]  # dilated cloud, cirrus, cloud, cloud shadow
@@ -75,7 +75,13 @@ stack_masked = stack.where(bad == 0)  # mask pixels where any one of those bits 
 # %% Create median composite
 median = stack_masked.median("time")
 
-# Plot RGB result
-median.sel(band=["red", "green", "blue"]).plot.imshow(robust=True)
+# write to file
+median.rio.to_raster("data/landsat-2021.tif")
 
-# %% Write to disk
+# %% Plot RGB result
+result = rioxarray.open_rasterio("data/landsat-2021.tif")
+result.sel(band=["red", "green", "blue"]).plot.imshow(robust=True)
+
+# %% Close the cluster
+client.close()
+# %%

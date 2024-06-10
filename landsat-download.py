@@ -24,11 +24,11 @@ aoi = {
   "type": "Polygon",
   "coordinates": [
     [
-      [-115.1690563443843, 52.46025704809213],
-      [-110.0580367599187, 52.46025704809213],
-      [-110.0580367599187, 54.47147165510637],
-      [-115.1690563443843, 54.47147165510637],
-      [-115.1690563443843, 52.46025704809213]
+      [-113.9, 53.3],
+      [-113.0, 53.3],
+      [-113.0, 53.9],
+      [-113.9, 53.9],
+      [-113.9, 53.3]
     ]
   ]
 }
@@ -76,7 +76,7 @@ stack_masked = stack.where(bad == 0)  # mask pixels where any one of those bits 
 median = stack_masked.median("time")
 
 # write to file
-median.rio.to_raster("data/landsat-2021.tif")
+median.rio.to_raster("data/landsat-2021-py.tif")
 
 # %% Plot RGB result
 result = rioxarray.open_rasterio("data/landsat-2021.tif")

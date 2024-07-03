@@ -8,4 +8,5 @@
 .quarto
 cache/
 .conda/
+.venv/
 data/

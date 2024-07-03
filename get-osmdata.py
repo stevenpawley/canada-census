@@ -6,16 +6,16 @@ import folium
 
 # %% get land use/land cover osm data types
 tags = {
-    "landuse": True,
-    "building": True,
     "amenity": True,
-    "water": True,
-    "tourism": True,
+    "building": True,
+    "landuse": True,
     "leisure": True,
-    "aeroway": True,
     "military": True,
     "natural": True,
     "public_transport": True,
+    "shop": True,
+    "tourism": True,
+    "water": True,
 }
 osm = ox.features_from_bbox(bbox=(53.9, 53.3, -113.0, -113.9), tags=tags)
 osm.reset_index(inplace=True)

@@ -33,3 +33,10 @@ for lulc, tags in schema.items():
 
 lc_types = pd.concat(lc_types)
 lc_types.loc[lc_types.lulc == "water"].plot(column="fclass")
+
+geom = lc_types.loc[lc_types.lulc == "water"]
+geom = geom.to_json()
+geo_j = folium.GeoJson(geom)
+m = folium.Map(tiles="CartoDB Positron")
+geo_j.add_to(m)
+m

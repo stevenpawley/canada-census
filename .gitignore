@@ -9,4 +9,5 @@
 cache/
 .conda/
 .venv/
-data/
+data/raw/
+data/processed/

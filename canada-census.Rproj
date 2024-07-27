@@ -16,5 +16,5 @@ AutoAppendNewline: Yes
 StripTrailingWhitespace: Yes
 
 PythonType: conda
-PythonVersion: 3.10.0
-PythonPath: ~/miniforge3/envs/canada-census/bin/python3.10
+PythonVersion: 3.10.14
+PythonPath: /cloud/home/r260130/.local/share/r-miniconda/envs/census-py3.10/bin/python

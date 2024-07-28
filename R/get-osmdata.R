@@ -8,16 +8,27 @@ library(leaflet)
 
 q <- opq(bbox = c(-113.9, 53.3, -113.0, 53.9))
 
-schema <- yaml::read_yaml("landcover-osm.yaml")
+schema <- read_csv("data/tables/osm-lulc.csv") |>
+  drop_na(lulc)
 
 osm <- list()
 
-for (i in seq_len(length(schema))) {
-  lulc_class <- names(schema)[[i]]
+lulc_classes <- unique(schema$lulc)
+
+for (lulc_class in lulc_classes) {
+  keys <- schema |>
+    filter(lulc == lulc_class) |>
+    distinct(key) |>
+    pluck("key")
+
   lulc_res <- list()
 
-  for (k in names(schema[[i]])) {
-    values <- schema[[i]][[k]]
+  for (k in keys) {
+    values <- schema |>
+      filter(lulc == lulc_class, key == k) |>
+      distinct(value) |>
+      pluck("value")
+
     data <- q |>
       add_osm_feature(key = k, value = values) |>
       osmdata_sf()

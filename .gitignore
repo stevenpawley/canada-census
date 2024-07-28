@@ -11,3 +11,4 @@ cache/
 .venv/
 data/raw/
 data/processed/
+python/.ipynb_checkpoints/

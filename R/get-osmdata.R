@@ -1,3 +1,4 @@
+library(here)
 library(osmdata)
 library(dplyr)
 library(tidyr)
@@ -6,9 +7,10 @@ library(readr)
 library(sf)
 library(leaflet)
 
-q <- opq(bbox = c(-113.9, 53.3, -113.0, 53.9))
+# q <- opq(bbox = c(-113.9, 53.3, -113.0, 53.9))
+q <- opq(bbox = c(-113.466621, 53.321786, -113.367143, 53.373997))
 
-schema <- read_csv("data/tables/osm-lulc.csv") |>
+schema <- read_csv(here("data/tables/osm-lulc.csv")) |>
   drop_na(lulc)
 
 osm <- list()
@@ -45,31 +47,12 @@ for (lulc_class in lulc_classes) {
 }
 
 osm <- bind_rows(osm, .id = "lulc")
-unique(osm$lulc)
 
 osm |>
-  filter(lulc == "urban_low") |>
+  filter(lulc == "urban_construction") |>
   leaflet() |>
   addProviderTiles(providers$Esri.WorldImagery) |>
   addPolygons()
 
-# buildings ----
-building_types <- available_tags("building")
-
-data <- q |>
-  add_osm_feature(key = "building", value = "farm_auxiliary") |>
-  osmdata_sf()
-data <- data$osm_polygons
-
-data[1,] |>
-  leaflet() |>
-  addProviderTiles(providers$Esri.WorldImagery) |>
-  addPolygons()
-
-buildings_lulc <- read_csv("data/raw/buildings.csv")
-buildings_lulc <- drop_na(buildings_lulc, lulc)
-
-buildings <- q |>
-  add_osm_feature(key = "building", value = buildings_lulc$value) |>
-  osmdata_sf()
-data <- data$osm_polygons
+dir.create(here("data/processed"), showWarnings = FALSE)
+st_write(osm, here("data/processed/osm-lulc.gpkg"), delete_dsn = TRUE)

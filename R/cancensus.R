@@ -6,7 +6,7 @@ library(cancensus)
 library(sf)
 library(ggplot2)
 library(leaflet)
-library(leafgl)
+dir.create(here("cache"), showWarnings = FALSE)
 
 # view available Census datasets
 list_census_datasets()
@@ -68,11 +68,14 @@ pal <- colorNumeric(
 
 leaflet() |>
   addProviderTiles(providers$OpenStreetMap) |>
-  addGlPolygons(
+  addPolygons(
     data = census_data |> filter(year == 2011),
     fillColor = ~ pal(Population),
     fillOpacity = 0.9,
     weight = 1,
-    color = "white",
+    color = "black",
     popup = ~ paste("Population: ", Population, "<br>")
   )
+
+st_write(census_data, here("data/processed/census-data.gpkg"),
+         delete_dsn = TRUE)

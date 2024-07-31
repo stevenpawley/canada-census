@@ -1,4 +1,6 @@
+library(here)
 library(glue)
+library(terra)
 library(sf)
 library(rstac)
 library(gdalcubes)
@@ -12,16 +14,13 @@ gdalcubes_options(parallel = TRUE)
 planetary_computer <-
   stac("https://planetarycomputer.microsoft.com/api/stac/v1/")
 
-bbox <- st_bbox(c(
-  xmin = -113.9,
-  ymin = 53.3,
-  xmax = -113.0,
-  ymax = 53.9
-),
-crs = 4326)
+census <- st_read(here("data/processed/census-data.gpkg"))
+bbox <- st_bbox(census)
 
 # retrieve items list ----
-date_range <- paste("2021-06-20", "2021-08-31", sep = "/")
+date_start <- "2023-06-10"
+date_end <- "2023-09-10"
+date_range <- paste(date_start, date_end, sep = "/")
 
 items <- planetary_computer |>
   stac_search(
@@ -32,7 +31,7 @@ items <- planetary_computer |>
   ) |>
   get_request() |>
   items_filter(
-    properties$`eo:cloud_cover` < 30 &
+    properties$`eo:cloud_cover` < 50 &
       properties$platform %in% c("landsat-8", "landsat-9")
   ) |>
   items_sign(sign_fn = sign_planetary_computer())
@@ -50,7 +49,7 @@ items |> items_assets()
 # create imagery collection with selected assets
 collection <- stac_image_collection(
   items$features,
-  asset_names = c("coastal", "blue", "green", "red", "nir08", "swir16",
+  asset_names = c("blue", "green", "red", "nir08", "swir16",
                   "swir22", "qa_pixel")
 )
 
@@ -63,13 +62,13 @@ bbox_tm <- bbox |>
 overview_ext <- as.list(bbox_tm) |>
   setNames(c("left", "bottom", "right", "top"))
 
-overview_ext$t0 <- "2021-06-20"
-overview_ext$t1 <- "2021-08-31"
+overview_ext$t0 <- date_start
+overview_ext$t1 <- date_end
 
 cube_overview <- cube_view(
   srs = "EPSG:3400",
-  dx = 1000,
-  dy = 1000,
+  dx = 500,
+  dy = 500,
   dt = "P6M",
   aggregation = "median",
   resampling = "near",
@@ -107,7 +106,6 @@ cube <- raster_cube(
   mask = cloud_mask
 ) |>
   select_bands(c(
-    "coastal",
     "blue",
     "green",
     "red",
@@ -116,8 +114,7 @@ cube <- raster_cube(
     "swir22"
   ))
 
-cube |>
-  plot(rgb = 4:2)
+plot(cube, rgb = 4:2)
 
 # create detailed cube ----
 cube_detailed <- cube_view(
@@ -136,7 +133,6 @@ cube <- raster_cube(
   mask = cloud_mask
 ) |>
   select_bands(c(
-    "coastal",
     "blue",
     "green",
     "red",
@@ -150,7 +146,6 @@ cube <- raster_cube(
 cube_aggregated <- cube |>
   reduce_time(
     c(
-      "median(coastal)",
       "median(blue)",
       "median(green)",
       "median(red)",
@@ -160,14 +155,15 @@ cube_aggregated <- cube |>
     )
   )
 
-cube_aggregated
-
 # write to file ----
 localfile <- write_tif(
   cube_aggregated,
-  dir = "data",
-  prefix = "landsat-2021",
+  dir = "data/processed",
+  prefix = "landsat",
   overviews = TRUE,
   COG = TRUE,
   rsmpl_overview = "nearest"
 )
+
+r <- rast(here("data/processed/landsat2023-06-01.tif"))
+plotRGB(stretch(r, minq = 0.02, maxq = 0.98), 4, 3, 2)

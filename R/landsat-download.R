@@ -10,7 +10,7 @@ library(purrr)
 library(ggplot2)
 
 # setup ----
-gdalcubes_options(parallel = TRUE)
+gdalcubes_options(parallel = TRUE, default_chunksize = c())
 planetary_computer <-
   stac("https://planetarycomputer.microsoft.com/api/stac/v1/")
 
@@ -31,7 +31,7 @@ items <- planetary_computer |>
   ) |>
   get_request() |>
   items_filter(
-    properties$`eo:cloud_cover` < 50 &
+    properties$`eo:cloud_cover` < 30 &
       properties$platform %in% c("landsat-8", "landsat-9")
   ) |>
   items_sign(sign_fn = sign_planetary_computer())
@@ -114,7 +114,7 @@ cube <- raster_cube(
     "swir22"
   ))
 
-plot(cube, rgb = 4:2)
+plot(cube, rgb = 3:1)
 
 # create detailed cube ----
 cube_detailed <- cube_view(

@@ -1,105 +1,105 @@
 key,value,lulc
-building,allotment_house,urban-low-density
-building,annexe,urban-low-density
-building,apartments,urban-low-density
-building,bakehouse,commerical/residential/industrial
-building,barn,developed-open-space
+building,allotment_house,developed - residential
+building,annexe,developed - residential
+building,apartments,developed - residential
+building,bakehouse,developed - commercial
+building,barn,developed - open space
 building,barracks,
 building,beach_hut,
-building,boathouse,urban-low-density
+building,boathouse,developed - residential
 building,bridge,
-building,bungalow,urban-low-density
+building,bungalow,developed - residential
 building,bunker,
-building,cabin,urban-low-density
-building,carport,urban-low-density
+building,cabin,developed - residential
+building,carport,developed - residential
 building,castle,
-building,cathedral,commerical/residential/industrial
-building,chapel,commerical/residential/industrial
-building,church,commerical/residential/industrial
-building,civic,commerical/residential/industrial
-building,college,commerical/residential/industrial
-building,commercial,commerical/residential/industrial
+building,cathedral,developed - commercial
+building,chapel,developed - commercial
+building,church,developed - commercial
+building,civic,developed - commercial
+building,college,developed - commercial
+building,commercial,developed - commercial
 building,conservatory,
-building,construction,developed-construction
-building,container,commerical/residential/industrial
+building,construction,developed - construction
+building,container,developed - commercial
 building,cowshed,
-building,detached,urban-low-density
+building,detached,developed - residential
 building,digester,
-building,dormitory,urban-low-density
-building,farm,developed-open-space
-building,farm_auxiliary,developed-open-space
-building,fire_station,commerical/residential/industrial
-building,garage,commerical/residential/industrial
-building,garages,commerical/residential/industrial
+building,dormitory,developed - residential
+building,farm,developed - open space
+building,farm_auxiliary,developed - open space
+building,fire_station,developed - commercial
+building,garage,developed - commercial
+building,garages,developed - commercial
 building,gatehouse,
 building,ger,
-building,government,commerical/residential/industrial
-building,grandstand,commerical/residential/industrial
-building,greenhouse,commerical/residential/industrial
+building,government,developed - commercial
+building,grandstand,developed - commercial
+building,greenhouse,developed - commercial
 building,guardhouse,
-building,hangar,commerical/residential/industrial
-building,hospital,commerical/residential/industrial
-building,hotel,commerical/residential/industrial
-building,house,urban-low-density
-building,houseboat,urban-low-density
-building,hut,developed-open-space
-building,industrial,commerical/residential/industrial
-building,kindergarten,commerical/residential/industrial
-building,kingdom_hall,commerical/residential/industrial
-building,kiosk,commerical/residential/industrial
-building,livestock,developed-open-space
+building,hangar,developed - commercial
+building,hospital,developed - commercial
+building,hotel,developed - commercial
+building,house,developed - residential
+building,houseboat,developed - residential
+building,hut,developed - open space
+building,industrial,developed - commercial
+building,kindergarten,developed - commercial
+building,kingdom_hall,developed - commercial
+building,kiosk,developed - commercial
+building,livestock,developed - open space
 building,military,
-building,monastery,commerical/residential/industrial
-building,mosque,commerical/residential/industrial
-building,museum,commerical/residential/industrial
-building,office,commerical/residential/industrial
+building,monastery,developed - commercial
+building,mosque,developed - commercial
+building,museum,developed - commercial
+building,office,developed - commercial
 building,outbuilding,
-building,pagoda,developed-open-space
-building,parking,commerical/residential/industrial
-building,pavilion,commerical/residential/industrial
+building,pagoda,developed - open space
+building,parking,developed - commercial
+building,pavilion,developed - commercial
 building,presbytery,
-building,public,commerical/residential/industrial
+building,public,developed - commercial
 building,quonset_hut,
-building,religious,commerical/residential/industrial
-building,residential,urban-low-density
-building,retail,commerical/residential/industrial
+building,religious,developed - commercial
+building,residential,developed - residential
+building,retail,developed - commercial
 building,riding_hall,
 building,roof,
 building,ruins,
-building,school,commerical/residential/industrial
-building,semidetached_house,urban-low-density
-building,service,commerical/residential/industrial
-building,shed,urban-low-density
+building,school,developed - commercial
+building,semidetached_house,developed - residential
+building,service,developed - commercial
+building,shed,developed - residential
 building,shrine,
-building,silo,commerical/residential/industrial
+building,silo,developed - commercial
 building,slurry_tank,
-building,sports_centre,commerical/residential/industrial
-building,sports_hall,commerical/residential/industrial
+building,sports_centre,developed - commercial
+building,sports_hall,developed - commercial
 building,stable,
-building,stadium,commerical/residential/industrial
+building,stadium,developed - commercial
 building,static_caravan,
-building,stilt_house,urban-low-density
-building,storage_tank,commerical/residential/industrial
+building,stilt_house,developed - residential
+building,storage_tank,developed - commercial
 building,sty,
-building,supermarket,commerical/residential/industrial
-building,synagogue,commerical/residential/industrial
+building,supermarket,developed - commercial
+building,synagogue,developed - commercial
 building,tech_cab,
-building,temple,commerical/residential/industrial
+building,temple,developed - commercial
 building,tent,
-building,terrace,urban-low-density
+building,terrace,developed - residential
 building,toilets,
 building,tower,
-building,train_station,commerical/residential/industrial
+building,train_station,developed - commercial
 building,transformer_tower,
-building,transportation,commerical/residential/industrial
+building,transportation,developed - commercial
 building,tree_house,
 building,trullo,
-building,university,commerical/residential/industrial
+building,university,developed - commercial
 building,user defined,
-building,warehouse,commerical/residential/industrial
+building,warehouse,developed - commercial
 building,water_tower,
 building,windmill,
-building,yes,urban-low-density
+building,yes,developed - residential
 water,basin,water
 water,canal,water
 water,ditch,water
@@ -115,44 +115,48 @@ water,river,water
 water,stream_pool,water
 water,wastewater,water
 water,water,water
-water,glacier,snow_ice
-natural,glacier,snow_ice
-natural,mud,rock_soil
-natural,shingle,rock_soil
-natural,beach,rock_soil
-natural,sand,rock_soil
-natural,scree,rock_soil
-natural,bare_rock,rock_soil
-landuse,quarry,rock_soil
-landuse,brownfield,rock_soil
-landuse,landfill,rock_soil
+water,glacier,snow-ice
+natural,glacier,snow-ice
+natural,mud,rock-soil
+natural,shingle,rock-soil
+natural,beach,rock-soil
+natural,sand,rock-soil
+natural,scree,rock-soil
+natural,bare_rock,rock-soil
+landuse,quarry,rock-soil
+landuse,brownfield,rock-soil
+landuse,landfill,rock-soil
 landuse,forest,forest
+natural,wood,forest
 natural,scrub,scrubland
 natural,heath,scrubland
 natural,grassland,grassland
 landuse,meadow,grassland
 water,wetland,wetland
-landuse,recreation_ground,urban_open
-landuse,village_green,urban_open
-landuse,residential,urban_low
-landuse,construction,urban_construction
-landuse,commercial,urban_high
-landuse,garages,urban_high
-landuse,industrial,urban_high
-landuse,railway,urban_high
-landuse,retail,urban_high
-amenity,parking,urban_high
-amenity,motorcycle_parking,urban_high
-amenity,bicycle_parking,urban_high
-amenity,arts_centre,urban_high
-amenity,bus_station,urban_high
-amenity,college,urban_high
-amenity,community_centre,urban_high
-amenity,conference_centre,urban_high
-amenity,courthouse,urban_high
-amenity,fire_station,urban_high
-amenity,hospital,urban_high
-amenity,university,urban_high
+landuse,recreation_ground,developed - open space
+landuse,village_green,developed - open space
+leisure,golf_course,developed - open space
+leisure,park,developed - open space
+landuse,grass,developed - open space
+landuse,residential,developed - residential
+landuse,construction,developed - construction
+landuse,commercial,developed - commercial
+landuse,garages,developed - commercial
+landuse,industrial,developed - commercial
+landuse,railway,developed - commercial
+landuse,retail,developed - commercial
+amenity,parking,developed - commercial
+amenity,motorcycle_parking,developed - commercial
+amenity,bicycle_parking,developed - commercial
+amenity,arts_centre,developed - commercial
+amenity,bus_station,developed - commercial
+amenity,college,developed - commercial
+amenity,community_centre,developed - commercial
+amenity,conference_centre,developed - commercial
+amenity,courthouse,developed - commercial
+amenity,fire_station,developed - commercial
+amenity,hospital,developed - commercial
+amenity,university,developed - commercial
 landuse,farmland,cropland
 landuse,allotments,cropland
 landuse,orchard,cropland

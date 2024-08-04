@@ -15,6 +15,6 @@ LaTeX: pdfLaTeX
 AutoAppendNewline: Yes
 StripTrailingWhitespace: Yes
 
-PythonType: conda
-PythonVersion: 3.10.14
-PythonPath: /cloud/home/r260130/.local/share/r-miniconda/envs/census-py3.10/bin/python
+PythonType: virtualenv
+PythonVersion: 3.11.9
+PythonPath: .venv/bin/python

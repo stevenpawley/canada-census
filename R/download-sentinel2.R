@@ -24,16 +24,13 @@ date_range <- paste(date_start, date_end, sep = "/")
 
 items <- planetary_computer |>
   stac_search(
-    collections = "landsat-c2-l2",
+    collections = "sentinel-2-l2a",
     bbox = as.numeric(bbox),
     datetime = date_range,
     limit = 1000
   ) |>
   get_request() |>
-  items_filter(
-    properties$`eo:cloud_cover` < 30 &
-      properties$platform %in% c("landsat-8", "landsat-9")
-  ) |>
+  items_filter(properties$`eo:cloud_cover` < 30) |>
   items_sign(sign_fn = sign_planetary_computer())
 
 print(paste("Number of products:", length(items$features)))
@@ -47,10 +44,21 @@ ggplot() +
 items |> items_assets()
 
 # create imagery collection with selected assets
-collection <- stac_image_collection(
-  items$features,
-  asset_names = c("blue", "green", "red", "nir08", "swir16",
-                  "swir22", "qa_pixel")
+for (i in seq_len(items_length(items))) {
+  item <- items_select(items, i)
+  item <- items_sign(item, sign_planetary_computer())
+  assets_download(item, output_dir = here("data/raw"))
+}
+
+files <- list.files(
+  here("data/raw/sentinel2-l2/"),
+  full.names = TRUE,
+  recursive = FALSE,
+  pattern = glob2rx("*.zip")
+)
+collection <- create_image_collection(
+  files,
+  format = "Sentinel2_L2A"
 )
 
 # create cube view (reference to object with defined spatiotemporal extent) ----
@@ -77,50 +85,22 @@ cube_overview <- cube_view(
 
 # create raster cube from imagery collection
 # cloud mask with all mid- to high-confidence cloud, cirrus and shadows
-cloud_mask <-
-  image_mask(
-    "qa_pixel",
-    values = c(
-      `fill` = 1,
-      `Dilated cloud over land` = 21826,
-      `Dilated cloud over water` = 21890,
-      `High conf Cloud` = 22280,
-      `High conf cloud shadow` = 23888,
-      `Water with cloud shadow` = 23952,
-      `Mid conf cloud with shadow` = 24088,
-      `Mid conf cloud with shadow over water` = 24216,
-      `High conf cloud with shadow` = 24344,
-      `High conf cloud with shadow over water` = 24472,
-      `High conf Cirrus` = 54596,
-      `Cirrus, mid cloud` = 54852,
-      `Cirrus, high cloud` = 55052,
-      `Cirrus, mid conf cloud, shadow` = 56856,
-      `Cirrus, mid conf cloud, shadow, over water` = 56984,
-      `Cirrus, high conf cloud, shadow` = 57240
-    )
-  )
+scl_mask <- image_mask("SCL", values = c(0, 3, 8, 9))
 
 cube <- raster_cube(
   image_collection = collection,
   view = cube_overview,
-  mask = cloud_mask
+  mask = scl_mask
 ) |>
-  select_bands(c(
-    "blue",
-    "green",
-    "red",
-    "nir08",
-    "swir16",
-    "swir22"
-  ))
+  select_bands(c(paste0("B0", 2:8), "B11", "B12", "B8A"))
 
-plot(cube, rgb = 3:1)
+plot(cube, rgb = 4:2)
 
 # create detailed cube ----
 cube_detailed <- cube_view(
   srs = "EPSG:3400",
-  dx = 30,
-  dy = 30,
+  dx = 10,
+  dy = 10,
   dt = "P6M",
   aggregation = "median",
   resampling = "near",
@@ -130,28 +110,25 @@ cube_detailed <- cube_view(
 cube <- raster_cube(
   image_collection = collection,
   view = cube_detailed,
-  mask = cloud_mask
+  mask = scl_mask
 ) |>
-  select_bands(c(
-    "blue",
-    "green",
-    "red",
-    "nir08",
-    "swir16",
-    "swir22"
-  ))
+  select_bands(c(paste0("B0", 2:8), "B11", "B12", "B8A"))
 
 # regularize raster cube into regular temporal dimension
 # (in this case, 1 time step that covers the range of all images)
 cube_aggregated <- cube |>
   reduce_time(
     c(
-      "median(blue)",
-      "median(green)",
-      "median(red)",
-      "median(nir08)",
-      "median(swir16)",
-      "median(swir22)"
+      "median(B02)",
+      "median(B03)",
+      "median(B04)",
+      "median(B05)",
+      "median(B06)",
+      "median(B07)",
+      "median(B08)",
+      "median(B8A)",
+      "median(B11)",
+      "median(B12)"
     )
   )
 
@@ -159,11 +136,11 @@ cube_aggregated <- cube |>
 localfile <- write_tif(
   cube_aggregated,
   dir = "data/processed",
-  prefix = "landsat",
+  prefix = "sentinel",
   overviews = TRUE,
   COG = TRUE,
   rsmpl_overview = "nearest"
 )
 
-r <- rast(here("data/processed/landsat2021-06-01.tif"))
+r <- rast(here("data/processed/sentinel2021-06-01.tif"))
 plotRGB(stretch(r, minq = 0.02, maxq = 0.98), 4, 3, 2)

@@ -7,8 +7,9 @@ library(readr)
 library(sf)
 library(leaflet)
 
-# q <- opq(bbox = c(-113.9, 53.3, -113.0, 53.9))
-q <- opq(bbox = c(-113.466621, 53.321786, -113.367143, 53.373997))
+census <- st_read(here("data/processed/census-data.gpkg"))
+bbox <- st_bbox(census)
+q <- opq(bbox = bbox)
 
 schema <- read_csv(here("data/tables/osm-lulc.csv")) |>
   drop_na(lulc)
@@ -35,7 +36,9 @@ for (lulc_class in lulc_classes) {
       add_osm_feature(key = k, value = values) |>
       osmdata_sf()
     data <- data$osm_polygons
-    lulc_res[[k]] <- data
+
+    lulc_res[[k]] <- data |>
+      select(any_of(c("osm_id", "name", unique(schema$key))))
   }
 
   if (length(lulc_res) > 1) {
@@ -49,7 +52,7 @@ for (lulc_class in lulc_classes) {
 osm <- bind_rows(osm, .id = "lulc")
 
 osm |>
-  filter(lulc == "urban_construction") |>
+  filter(lulc == "forest") |>
   leaflet() |>
   addProviderTiles(providers$Esri.WorldImagery) |>
   addPolygons()

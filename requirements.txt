@@ -3,3 +3,5 @@ pandas
 seaborn
 folium
 pyogrio
+eodag
+rasterio

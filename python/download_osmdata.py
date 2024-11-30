@@ -4,28 +4,7 @@ import osmnx as ox
 from osmnx._errors import InsufficientResponseError
 import geopandas as gpd
 import folium
-import yaml
 
-# %%
-with open("landcover-osm.yaml", "r") as f:
-    schema = yaml.safe_load(f)
-
-lulc_data = list()
-
-for lulc, tags in schema.items():
-    try:
-        osm = ox.features_from_bbox(bbox=(53.9, 53.3, -113.0, -113.9), tags=tags)
-        osm.reset_index(inplace=True)
-        osm = osm.loc[osm.element_type.isin(["relation", "way"]), :]
-        osm["lulc"] = lulc
-        lulc_data.append(osm)
-    except InsufficientResponseError:
-        pass
-
-lulc_df = pd.concat(lulc_data)
-
-lulc_df.plot(column="lulc", legend=True)
-lulc_df.to_file("lulc-osm.gpkg")
 
 # %% get land use/land cover osm data types
 tags = {
@@ -40,10 +19,10 @@ tags = {
     "tourism": True,
     "water": True,
 }
+
+# %% download all osm data except 'relation'
 osm = ox.features_from_bbox(bbox=(53.9, 53.3, -113.0, -113.9), tags=tags)
 osm.reset_index(inplace=True)
-
-# %% filter by multi-index 'element_type' = 'relation'
 osm_py = osm.loc[osm.element_type.isin(["relation", "way"]), :]
 
 osm_py.columns.tolist()
@@ -65,6 +44,7 @@ osm_subset = osm_py.loc[
 ]
 osm_py.plot(column="natural")
 
+# %% interative map
 folium_map = folium.Map(
     location=[53.5444, -113.4909], zoom_start=10, tiles="Esri.WorldImagery"
 )

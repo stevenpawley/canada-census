@@ -1,3 +1,4 @@
+# %% imports
 import os
 import shutil
 from pathlib import Path
@@ -6,10 +7,11 @@ import geopandas as gpd
 from eodag import setup_logging
 from eodag.api.core import EODataAccessGateway
 
+# %% query products
 setup_logging(verbose=2)
 dag = EODataAccessGateway()
-census = gpd.read_file("data/processed/census-data.gpkg")
-output_dir = "data/raw/sentinel2-l2/edmonton-2023"
+census = gpd.read_file("../data/processed/census-data.gpkg")
+output_dir = "../data/raw/sentinel2-l2/edmonton-2023"
 os.makedirs(output_dir, exist_ok=True)
 
 product_type = 'S2_MSI_L2A'
@@ -20,7 +22,7 @@ extent = {
     'latmax': census.total_bounds[1]
 }
 
-products, _ = dag.search(
+products = dag.search(
     productType=product_type,
     start='2023-08-01',
     end='2023-08-31',
@@ -32,6 +34,7 @@ products, _ = dag.search(
 filtered_products = products.filter_property(cloudCover=30, operator="lt")
 print("Number of items:", len(filtered_products))
 
+# %% download datasets
 product_path = dag.download_all(filtered_products, extract=False)
 
 for d in product_path:

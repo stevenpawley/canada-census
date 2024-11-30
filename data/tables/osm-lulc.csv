@@ -115,6 +115,7 @@ water,river,water
 water,stream_pool,water
 water,wastewater,water
 water,water,water
+landuse,manmade_lake,water
 water,glacier,snow-ice
 natural,glacier,snow-ice
 natural,mud,rock-soil
@@ -145,6 +146,7 @@ landuse,garages,developed - commercial
 landuse,industrial,developed - commercial
 landuse,railway,developed - commercial
 landuse,retail,developed - commercial
+landuse,civic_admin,developed - commercial
 amenity,parking,developed - commercial
 amenity,motorcycle_parking,developed - commercial
 amenity,bicycle_parking,developed - commercial
@@ -163,3 +165,37 @@ landuse,orchard,cropland
 landuse,vineyard,cropland
 landuse,plant_nursery,cropland
 leisure,garden,cropland
+landuse,Provincial Park,forest
+landuse,cemetery,developed - open space
+landuse,greenfield,developed - open space
+landuse,education,developed - open space
+landuse,logging,forest
+landuse,reservation,developed - residential
+landuse,retail;commercial,developed - commercial
+landuse,tourism,developed - open space
+landuse,greenhouse_horticulture,developed - commercial
+landuse,aquaculture,water
+landuse,winter_sports,developed - open space
+landuse,traffic_island,
+landuse,churchyard,developed - open space
+landuse,civil,
+landuse,recreation,
+landuse,harbour,
+landuse,power_transmission,
+landuse,trailer_park,
+landuse,logistics,
+landuse,flowerbed,
+landuse,car_parking,
+landuse,animal_keeping,cropland
+landuse,feedlot,
+landuse,proposed,
+landuse,agricultural,
+landuse,disused:industrial,
+landuse,basins,
+landuse,utility,
+landuse,facility,
+landuse,storage,
+landuse,emergency,
+landuse,residential+disused,
+landuse,institutional,
+landuse,healthcare,

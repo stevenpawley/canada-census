@@ -17,7 +17,7 @@ parcels <- tribble(
   0, 9, 0
 )
 
-pop$area = rowSums(parcels)
+pop$area <- rowSums(parcels)
 
 pop <- pop |>
   mutate(density = pop / area)

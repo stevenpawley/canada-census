@@ -1,0 +1,30 @@
+name: canada-census
+channels:
+  - conda-forge
+dependencies:
+  - geopandas
+  - pandas
+  - seaborn
+  - folium
+  - pyogrio
+  - eodag
+  - rasterio
+  - xarray
+  - rioxarray
+  - stackstac
+  - osmnx
+  - dask
+  - planetary-computer
+  - pystac-client
+  - r-terra
+  - r-tidyverse
+  - r-ranger
+  - r-broom
+  - r-cancensus
+  - r-sf
+  - r-leaflet
+  - r-here
+  - r-glue
+  - r-rstac
+  - r-gdalcubes
+  - r-osmdata

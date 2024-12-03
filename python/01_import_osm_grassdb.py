@@ -4,12 +4,15 @@ from grass_helpers import GrassHelper
 
 # %% start a new grass session
 gisbase = "/usr/lib/grass83"
-gisdbase = "/media/psf/Grassdata"
+gisdbase = "/home/steven/Grassdata"
 location = "dasymetric-mapping"
 mapset = "PERMANENT"
 
 grassprj = GrassHelper(gisbase, gisdbase, location, mapset, 4326)
 grassprj.set_python_path()
+
+# %%
+grassprj.create_location()
 session = grassprj.open_grass_session()
 
 # %% import every shapefile in the data directory
@@ -29,3 +32,5 @@ for f in os.listdir(data_dir):
             )
         except gs.CalledModuleError as e:
             print(e.stderr)
+
+# %%

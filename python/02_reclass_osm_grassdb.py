@@ -5,7 +5,7 @@ from grass_helpers import GrassHelper
 
 # %% start a new grass session
 gisbase = "/usr/lib/grass83"
-gisdbase = "/media/psf/Grassdata"
+gisdbase = "/home/steven/Grassdata"
 location = "dasymetric-mapping"
 mapset = "PERMANENT"
 
@@ -27,14 +27,14 @@ with sqlite3.connect(db_path) as conn:
 import grass.script as gs
 
 with sqlite3.connect(db_path) as conn:
-    gis_osm_landuse_py = pd.read_sql("SELECT * FROM gis_osm_landuse_py", conn)
+    gis_osm_landuse_py = pd.read_sql("SELECT * FROM gis_osm_landuse_a_free_1", conn)
 
 gis_osm_landuse_py
 
 # %% join lulc table with the gis_osm_landuse_py grass vector
 gs.run_command(
     "v.db.join",
-    map="gis_osm_landuse_py",
+    map="gis_osm_landuse_a_free_1",
     column="fclass",
     other_table="osm_lulc",
     other_column="value",
@@ -42,16 +42,16 @@ gs.run_command(
 
 # %%
 with sqlite3.connect(db_path) as conn:
-    gis_osm_landuse_py = pd.read_sql("SELECT * FROM gis_osm_landuse_py", conn)
+    gis_osm_landuse_py = pd.read_sql("SELECT * FROM gis_osm_landuse_a_free_1", conn)
 
 gis_osm_landuse_py
 
 # %% rasterize
 # set region
-gs.run_command("g.region", vector="gis_osm_landuse_py", res=30)
+gs.run_command("g.region", vector="gis_osm_landuse_a_free_1", res=30)
 gs.run_command(
     "v.reclass",
-    input="gis_osm_landuse_py",
+    input="gis_osm_landuse_a_free_1",
     output="gis_osm_landuse_py_reclass",
     column="lulc",
     overwrite=True,
@@ -69,6 +69,14 @@ gs.run_command(
 
 gs.run_command("r.colors", map="gis_osm_landuse_py_reclass", color="random")
 
+# %% create folium map using grass jupyter
+import folium
+import grass.jupyter as gj
+
+m = gj.InteractiveMap()
+m.add_raster("gis_osm_landuse_py_reclass")
+m.show()
+
 # %%
 with sqlite3.connect(db_path) as conn:
     poly = pd.read_sql("SELECT * FROM multipolygons", conn)
@@ -76,6 +84,12 @@ with sqlite3.connect(db_path) as conn:
 poly
 
 # %% extract
-gs.run_command("v.extract", input="multipolygons", output="multipolygons_railway", type="area",
-               where="landuse='railway'", overwrite=True)
+gs.run_command(
+    "v.extract",
+    input="multipolygons",
+    output="multipolygons_railway",
+    type="area",
+    where="landuse='railway'",
+    overwrite=True,
+)
 # %%

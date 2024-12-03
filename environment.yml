@@ -14,6 +14,7 @@ dependencies:
   - stackstac
   - osmnx
   - dask
+  - ipykernel
   - planetary-computer
   - pystac-client
   - r-terra

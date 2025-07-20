@@ -13,3 +13,4 @@ dask
 ipykernel
 planetary-computer
 pystac-client
+dask[distributed]

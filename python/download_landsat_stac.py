@@ -1,4 +1,3 @@
-# %% Import libraries
 from pystac_client import Client as STACClient
 import planetary_computer as pc
 import xarray as xr
@@ -7,13 +6,14 @@ import stackstac
 import geopandas as gpd
 from dask.distributed import Client, LocalCluster
 import multiprocessing as mp
+import matplotlib.pyplot as plt
 
-# %% Start a local cluster
+# %% Start a local cluster (keep worker memory to 2GB)
 cluster = LocalCluster(
-    n_workers=mp.cpu_count(),
+    n_workers=2,
     threads_per_worker=1,
+    memory_limit="2GB",
     processes=False,
-    dashboard_address=":5959",
 )
 client = Client(cluster)
 client
@@ -53,12 +53,19 @@ print(f"Found {len(items)} items")
 
 # get scene bounds as geodataframe
 scene_bounds = gpd.GeoDataFrame.from_features(items)
-scene_bounds.plot(linewidth=0.5, edgecolor="red", facecolor="none")
+
+fig, ax = plt.subplots(figsize=(8, 8))
+img = scene_bounds.plot(linewidth=0.5, edgecolor="red", facecolor="none", ax=ax)
+ax.set_title("Landsat 8 Scenes - Summer 2021 - Cloud Cover <= 30%")
+plt.savefig('plots/landsat-scenes.png')
 
 # %% Load the data into an xarray dataset
 item = items[2]
 ds = rioxarray.open_rasterio(item.assets["swir22"].href, masked=True)
+
+fig, ax = plt.subplots(figsize=(8, 8))
 ds.squeeze().plot.imshow()
+plt.savefig('plots/landsat-single-band.png')
 
 # %% Load all items into a single xarray dataset
 asset_list = ["red", "green", "blue", "nir", "swir16", "swir22", "qa_pixel"]
@@ -88,15 +95,19 @@ subarea = stack_masked.sel(band="swir22").rio.clip_box(
     maxy=5.81e6
 )
 
+fig, ax = plt.subplots(figsize=(8, 8))
 subarea.plot.imshow(robust=True)
+plt.savefig('plots/landsat-subarea.png')
 
 # %% write to file
 median.rio.to_raster("data/landsat-2021-py.tif")
 
 # %% Plot RGB result
-result = rioxarray.open_rasterio("data/landsat-2021.tif")
-result.sel(band=["red", "green", "blue"]).plot.imshow(robust=True)
+result = rioxarray.open_rasterio("data/landsat-2021-py.tif")
+
+fig, ax = plt.subplots()
+result.sel(band=["red", "green", "blue"]).plot.imshow(robust=True, ax=ax)
+plt.savefig('plots/final.png')
 
 # %% Close the cluster
 client.close()
-# %%

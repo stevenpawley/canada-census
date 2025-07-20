@@ -16,5 +16,5 @@ AutoAppendNewline: Yes
 StripTrailingWhitespace: Yes
 
 PythonType: virtualenv
-PythonVersion: 3.12.3
-PythonPath: ~/.virtualenvs/census/bin/python
+PythonVersion: 3.12.11
+PythonPath: .venv/bin/python

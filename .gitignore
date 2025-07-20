@@ -1,14 +1,26 @@
+# R project data
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
 .Rdata
-.httr-oauth
+
+# MacOS indexes
 .DS_Store
+
+# Quarto
+.httr-oauth
 .quarto
-cache/
+
+# Python environments
 .conda/
 .venv/
+
+# Data folders
 data/raw/
 data/processed/
+plots/
+
+# Jupyter related files including pycache
 python/.ipynb_checkpoints/
+__pycache__/

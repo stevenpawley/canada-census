@@ -5,7 +5,7 @@ from grass_helpers import GrassHelper
 
 # %% start a new grass session
 gisbase = "/usr/lib/grass83"
-gisdbase = "/home/steven/Grassdata"
+gisdbase = "~/grassdata"
 location = "dasymetric-mapping"
 mapset = "PERMANENT"
 
@@ -17,16 +17,15 @@ session = grassprj.open_grass_session()
 import sqlite3
 
 lulc = pd.read_csv("../data/tables/osm-lulc.csv")
-
 db_path = os.path.join(gisdbase, location, mapset, "sqlite", "sqlite.db")
 
-with sqlite3.connect(db_path) as conn:
+with sqlite3.connect(os.path.expanduser(db_path)) as conn:
     lulc.to_sql("osm_lulc", conn, if_exists="replace", index=False)
 
 # %% example the grass gis_osm_landuse_py attribute table
 import grass.script as gs
 
-with sqlite3.connect(db_path) as conn:
+with sqlite3.connect(os.path.expanduser(db_path)) as conn:
     gis_osm_landuse_py = pd.read_sql("SELECT * FROM gis_osm_landuse_a_free_1", conn)
 
 gis_osm_landuse_py
@@ -40,8 +39,8 @@ gs.run_command(
     other_column="value",
 )
 
-# %%
-with sqlite3.connect(db_path) as conn:
+# %%  check join
+with sqlite3.connect(os.path.expanduser(db_path)) as conn:
     gis_osm_landuse_py = pd.read_sql("SELECT * FROM gis_osm_landuse_a_free_1", conn)
 
 gis_osm_landuse_py
@@ -69,27 +68,8 @@ gs.run_command(
 
 gs.run_command("r.colors", map="gis_osm_landuse_py_reclass", color="random")
 
-# %% create folium map using grass jupyter
-import folium
-import grass.jupyter as gj
-
-m = gj.InteractiveMap()
-m.add_raster("gis_osm_landuse_py_reclass")
-m.show()
-
 # %%
-with sqlite3.connect(db_path) as conn:
-    poly = pd.read_sql("SELECT * FROM multipolygons", conn)
+with sqlite3.connect(os.path.expanduser(db_path)) as conn:
+    poly = pd.read_sql("SELECT DISTINCT landuse FROM multipolygons", conn)
 
 poly
-
-# %% extract
-gs.run_command(
-    "v.extract",
-    input="multipolygons",
-    output="multipolygons_railway",
-    type="area",
-    where="landuse='railway'",
-    overwrite=True,
-)
-# %%

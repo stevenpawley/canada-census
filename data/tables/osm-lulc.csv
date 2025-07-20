@@ -2,7 +2,7 @@ key,value,lulc
 building,allotment_house,developed - residential
 building,annexe,developed - residential
 building,apartments,developed - residential
-building,bakehouse,developed - commercial
+building,bakehouse,developed - urban mixed use
 building,barn,developed - open space
 building,barracks,
 building,beach_hut,
@@ -13,90 +13,90 @@ building,bunker,
 building,cabin,developed - residential
 building,carport,developed - residential
 building,castle,
-building,cathedral,developed - commercial
-building,chapel,developed - commercial
-building,church,developed - commercial
-building,civic,developed - commercial
-building,college,developed - commercial
-building,commercial,developed - commercial
+building,cathedral,developed - urban mixed use
+building,chapel,developed - urban mixed use
+building,church,developed - urban mixed use
+building,civic,developed - urban mixed use
+building,college,developed - urban mixed use
+building,commercial,developed - urban mixed use
 building,conservatory,
 building,construction,developed - construction
-building,container,developed - commercial
+building,container,developed - urban mixed use
 building,cowshed,
 building,detached,developed - residential
 building,digester,
 building,dormitory,developed - residential
 building,farm,developed - open space
 building,farm_auxiliary,developed - open space
-building,fire_station,developed - commercial
-building,garage,developed - commercial
-building,garages,developed - commercial
+building,fire_station,developed - urban mixed use
+building,garage,developed - urban mixed use
+building,garages,developed - urban mixed use
 building,gatehouse,
 building,ger,
-building,government,developed - commercial
-building,grandstand,developed - commercial
-building,greenhouse,developed - commercial
+building,government,developed - urban mixed use
+building,grandstand,developed - urban mixed use
+building,greenhouse,developed - urban mixed use
 building,guardhouse,
-building,hangar,developed - commercial
-building,hospital,developed - commercial
-building,hotel,developed - commercial
+building,hangar,developed - urban mixed use
+building,hospital,developed - urban mixed use
+building,hotel,developed - urban mixed use
 building,house,developed - residential
 building,houseboat,developed - residential
 building,hut,developed - open space
-building,industrial,developed - commercial
-building,kindergarten,developed - commercial
-building,kingdom_hall,developed - commercial
-building,kiosk,developed - commercial
+building,industrial,developed - urban mixed use
+building,kindergarten,developed - urban mixed use
+building,kingdom_hall,developed - urban mixed use
+building,kiosk,developed - urban mixed use
 building,livestock,developed - open space
 building,military,
-building,monastery,developed - commercial
-building,mosque,developed - commercial
-building,museum,developed - commercial
-building,office,developed - commercial
+building,monastery,developed - urban mixed use
+building,mosque,developed - urban mixed use
+building,museum,developed - urban mixed use
+building,office,developed - urban mixed use
 building,outbuilding,
 building,pagoda,developed - open space
-building,parking,developed - commercial
-building,pavilion,developed - commercial
+building,parking,developed - urban mixed use
+building,pavilion,developed - urban mixed use
 building,presbytery,
-building,public,developed - commercial
+building,public,developed - urban mixed use
 building,quonset_hut,
-building,religious,developed - commercial
+building,religious,developed - urban mixed use
 building,residential,developed - residential
-building,retail,developed - commercial
+building,retail,developed - urban mixed use
 building,riding_hall,
 building,roof,
 building,ruins,
-building,school,developed - commercial
+building,school,developed - urban mixed use
 building,semidetached_house,developed - residential
-building,service,developed - commercial
+building,service,developed - urban mixed use
 building,shed,developed - residential
 building,shrine,
-building,silo,developed - commercial
+building,silo,developed - urban mixed use
 building,slurry_tank,
-building,sports_centre,developed - commercial
-building,sports_hall,developed - commercial
+building,sports_centre,developed - urban mixed use
+building,sports_hall,developed - urban mixed use
 building,stable,
-building,stadium,developed - commercial
+building,stadium,developed - urban mixed use
 building,static_caravan,
 building,stilt_house,developed - residential
-building,storage_tank,developed - commercial
+building,storage_tank,developed - urban mixed use
 building,sty,
-building,supermarket,developed - commercial
-building,synagogue,developed - commercial
+building,supermarket,developed - urban mixed use
+building,synagogue,developed - urban mixed use
 building,tech_cab,
-building,temple,developed - commercial
+building,temple,developed - urban mixed use
 building,tent,
 building,terrace,developed - residential
 building,toilets,
 building,tower,
-building,train_station,developed - commercial
+building,train_station,developed - urban mixed use
 building,transformer_tower,
-building,transportation,developed - commercial
+building,transportation,developed - urban mixed use
 building,tree_house,
 building,trullo,
-building,university,developed - commercial
+building,university,developed - urban mixed use
 building,user defined,
-building,warehouse,developed - commercial
+building,warehouse,developed - urban mixed use
 building,water_tower,
 building,windmill,
 building,yes,developed - residential
@@ -141,24 +141,24 @@ leisure,park,developed - open space
 landuse,grass,developed - open space
 landuse,residential,developed - residential
 landuse,construction,developed - construction
-landuse,commercial,developed - commercial
-landuse,garages,developed - commercial
-landuse,industrial,developed - commercial
-landuse,railway,developed - commercial
-landuse,retail,developed - commercial
-landuse,civic_admin,developed - commercial
-amenity,parking,developed - commercial
-amenity,motorcycle_parking,developed - commercial
-amenity,bicycle_parking,developed - commercial
-amenity,arts_centre,developed - commercial
-amenity,bus_station,developed - commercial
-amenity,college,developed - commercial
-amenity,community_centre,developed - commercial
-amenity,conference_centre,developed - commercial
-amenity,courthouse,developed - commercial
-amenity,fire_station,developed - commercial
-amenity,hospital,developed - commercial
-amenity,university,developed - commercial
+landuse,commercial,developed - urban mixed use
+landuse,garages,developed - urban mixed use
+landuse,industrial,developed - urban mixed use
+landuse,railway,developed - urban mixed use
+landuse,retail,developed - urban mixed use
+landuse,civic_admin,developed - urban mixed use
+amenity,parking,developed - urban mixed use
+amenity,motorcycle_parking,developed - urban mixed use
+amenity,bicycle_parking,developed - urban mixed use
+amenity,arts_centre,developed - urban mixed use
+amenity,bus_station,developed - urban mixed use
+amenity,college,developed - urban mixed use
+amenity,community_centre,developed - urban mixed use
+amenity,conference_centre,developed - urban mixed use
+amenity,courthouse,developed - urban mixed use
+amenity,fire_station,developed - urban mixed use
+amenity,hospital,developed - urban mixed use
+amenity,university,developed - urban mixed use
 landuse,farmland,cropland
 landuse,allotments,cropland
 landuse,orchard,cropland
@@ -171,9 +171,9 @@ landuse,greenfield,developed - open space
 landuse,education,developed - open space
 landuse,logging,forest
 landuse,reservation,developed - residential
-landuse,retail;commercial,developed - commercial
+landuse,retail;commercial,developed - urban mixed use
 landuse,tourism,developed - open space
-landuse,greenhouse_horticulture,developed - commercial
+landuse,greenhouse_horticulture,developed - urban mixed use
 landuse,aquaculture,water
 landuse,winter_sports,developed - open space
 landuse,traffic_island,
